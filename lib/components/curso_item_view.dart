@@ -16,19 +16,36 @@ class CursoItemView extends StatelessWidget {
     final tema = Theme.of(context);
 
     return Card(
-      margin: const EdgeInsets.all(4),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.topRight,
+            child: PopupMenuButton<int>(
+              onSelected: (value) {
+                if (value == 0) {
+                  final vm =
+                      Provider.of<CursoViewModel>(context, listen: false);
+                  vm.removerCurso(curso.id);
+                }
+              },
+              itemBuilder: (context) {
+                return <PopupMenuEntry<int>>[
+                  const PopupMenuItem(
+                    value: 0,
+                    child: Text("Excluir"),
+                  ),
+                ];
+              },
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   curso.nome,
                   style: tema.textTheme.titleMedium,
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(
                   height: 4,
@@ -50,24 +67,8 @@ class CursoItemView extends StatelessWidget {
                 )
               ],
             ),
-            PopupMenuButton<int>(
-              onSelected: (value) {
-                if (value == 0) {
-                  final vm = Provider.of<CursoViewModel>(context, listen: false);
-                  vm.removerCurso(curso.id);
-                }
-              },
-              itemBuilder: (context) {
-                return <PopupMenuEntry<int>>[
-                  const PopupMenuItem(
-                    value: 0,
-                    child: Text("Excluir"),
-                  ),
-                ];
-              },
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

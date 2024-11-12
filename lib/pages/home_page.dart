@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -41,7 +40,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemCount: cursos.length,
         itemBuilder: (context, index) => CursoItemView(curso: cursos[index]),
       ),
