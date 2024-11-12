@@ -1,6 +1,8 @@
 import 'package:escola/components/select_periodo.dart';
 import 'package:escola/entidades/periodo.dart';
+import 'package:escola/vm/curso_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NovoCursoPage extends StatefulWidget {
   const NovoCursoPage({super.key});
@@ -46,7 +48,7 @@ class _NovoCursoPageState extends State<NovoCursoPage> {
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: criaNovoCurso,
                 child: const Text("Salvar"),
               ),
             ],
@@ -60,5 +62,15 @@ class _NovoCursoPageState extends State<NovoCursoPage> {
     setState(() {
       periodo = value;
     });
+  }
+
+  Future<void> criaNovoCurso() async {
+    final vm = Provider.of<CursoViewModel>(context, listen: false);
+    await vm.criaNovoCurso(nomeController.text, periodo);
+
+    final ctx = context;
+    if (ctx.mounted) {
+      Navigator.pop(ctx);
+    }    
   }
 }
